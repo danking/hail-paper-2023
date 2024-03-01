@@ -1,0 +1,9 @@
+- RVD should use base64 instead of UUID
+- BM should have a README
+- BM should gzip metadata.json
+- BM should use RVD
+- RVD vtype textual rendering should be consistent across Python and Scala
+- RVD _jRangeBounds should use Hail format
+- Why are part counts stored in Table instead of RVD?
+- RVD index files shouldn't each have a separate metadata.json.gz file
+- We have to allow non-builtin references as default references

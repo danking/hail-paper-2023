@@ -1,4 +1,3 @@
-
 \documentclass[10pt,a4paper%% ,twoside,openright,titlepage,
 %%                headinclude,footinclude,numbers=noenddot,
 %%                captions=tableheading
@@ -16,8 +15,7 @@
 %% \usepackage{amsmath,amssymb}
 %% \usepackage{newpxtext,newpxmath}
 \usepackage{biblatex}
-\addbibresource{sample.bib}
-
+%% \addbibresource{main.bib}
 \usepackage{listings}
 %\usepackage{inconsolata}
 \usepackage[T1]{fontenc}
@@ -77,7 +75,6 @@
 
 \begin{document}
 
-
 \pagestyle{plain}
 
 \title{\rmfamily\normalfont\spacedallcaps{The Hail System: Computing for Data-Intensive Science}}
@@ -117,12 +114,8 @@
 %%   \spacedlowsmallcaps{Benjamin M Neale}
 %% }
 \date{\spacedlowsmallcaps{December 2022}}
-
 \newcommand{\tableheadline}[1]{\spacedlowsmallcaps{#1}}
-
-
 \maketitle
-
 \begin{abstract}
     Abstract.
 \end{abstract}
@@ -286,7 +279,7 @@ The Hail System has two primary interfaces: the Query interface and the Batch in
 The Query interface presents relational and linear algebra with a ``data frame'' interface.
 The Batch interface concerns ``pipelines'' and ``workflows''.
 A distinguishing feature of the Hail System is the ability to \emph{compose} Query pipelines with Batch pipelines.
-Consider, for example, a single Python file, which uses Hail Query to count variants per genes per sample, export that to a file per-gene, uses Hail Batch to execute SAIGE
+Consider, for example, a single Python file, which uses Hail Query to count variants per genes per sample, export that to a file per-gene, uses Hail Batch to execute SAIGE%
 \footnote{SAIGE is a very fast C++ program for fitting linear mixed models.}
 on each file, then uses Hail Query to load all the individual results files, and, finally, produce a plot of p-values.
 
@@ -315,21 +308,65 @@ Every small datatype is totally ordered and has decidable equality.
       \toprule
       \tableheadline{Name} & \tableheadline{Description} & \tableheadline{Examples} \\
       \midrule
-      \texttt{bool} & Boolean values & \texttt{\footnotesize True} \\
-      \texttt{int}, \texttt{int32} & 32-bit integers & \texttt{\footnotesize 123} \\
-      \texttt{int64} & 64-bit integers & \texttt{\footnotesize 123} \\
-      \texttt{float32} & 32-bit floating-point number & \texttt{\footnotesize 1.0} \\
-      \texttt{float}, \texttt{float64} & 64-bit floating-point number & \texttt{\footnotesize 1.0} \\
-      \texttt{array(T)} & an array of data of type \texttt{\footnotesize T} & \texttt{\footnotesize []} \newline \texttt{\footnotesize [1.0, 1.0]} \\
-      \texttt{set(T)} & set of data of type \texttt{\footnotesize T} & \texttt{\footnotesize \{\}} \newline \texttt{\footnotesize \{5, 10, -4\}} \\
-      \texttt{dict(K,V)} & a finite mapping & \texttt{\footnotesize \{\}} \newline \texttt{\footnotesize \{5:"a", 10:"applepie"\}} \\
-      \texttt{struct(...,fN=TN)} & a structure with $N$ fields & \texttt{\footnotesize struct()} \newline \texttt{\footnotesize struct(x=5, y="a", z=struct(x=42.0))} \\
-      \texttt{tuple(..., TN)} & a structure with $N$ nameless fields & \texttt{\footnotesize (,)} \newline \texttt{\footnotesize (1.0, 1, "abc")} \\
-      \texttt{str} & a UTF-8 string & \texttt{\footnotesize "abc 123"} \\
-      \texttt{call} & a genotype call & \texttt{\footnotesize call(0, 1)} \newline \texttt{\footnotesize call(2)} \\
-      \texttt{locus(ref)} & a genomic locus in the reference \texttt{\footnotesize ref} & \texttt{\footnotesize locus("1", 100000, "GRCh37")} \newline \texttt{\footnotesize locus("chrM", 1234, "GRCh38")} \\
-      \texttt{interval(T)} & an interval on the type \texttt{T} & \texttt{\footnotesize interval(4.5, 1e8)} \newline \texttt{\footnotesize interval("abc", "xyzdef")} \newline \texttt{\footnotesize interval(locus("1",1234), locus("1",5000))} \\
-      \texttt{ndarray(T)} & a vector, matrix, or tensor containing \texttt{\footnotesize T} & \texttt{\footnotesize nd.array([1, 2])} \newline \texttt{\footnotesize nd.array([[1.0, 0.0], [0.0, 1.0]])} \\
+      \texttt{bool} &%
+      Boolean values &%
+      \texttt{\footnotesize True} \\
+
+      \texttt{int}, \texttt{int32} &%
+      32-bit integers &%
+      \texttt{\footnotesize 123} \\
+
+      \texttt{int64} &%
+      64-bit integers &%
+      \texttt{\footnotesize 123} \\
+
+      \texttt{float32} &%
+      32-bit floating-point number &%
+      \texttt{\footnotesize 1.0} \\
+
+      \texttt{float}, \texttt{float64} &%
+      64-bit floating-point number &%
+      \texttt{\footnotesize 1.0} \\
+
+      \texttt{array(T)} &%
+      an array of data of type \texttt{\footnotesize T} &%
+      \texttt{\footnotesize []} \newline \texttt{\footnotesize [1.0, 1.0]} \\
+
+      \texttt{set(T)} &%
+      set of data of type \texttt{\footnotesize T} &%
+      \texttt{\footnotesize \{\}} \newline \texttt{\footnotesize \{5, 10, -4\}} \\
+
+      \texttt{dict(K,V)} &%
+      a finite mapping &%
+      \texttt{\footnotesize \{\}} \newline \texttt{\footnotesize \{5:"a", 10:"applepie"\}} \\
+
+      \texttt{struct(...,fN=TN)} &%
+      a structure with $N$ fields &%
+      \texttt{\footnotesize struct()} \newline \texttt{\footnotesize struct(x=5, y="a", z=struct(x=42.0))} \\
+
+      \texttt{tuple(..., TN)} &%
+      a structure with $N$ nameless fields &%
+      \texttt{\footnotesize (,)} \newline \texttt{\footnotesize (1.0, 1, "abc")} \\
+
+      \texttt{str} &%
+      a UTF-8 string &%
+      \texttt{\footnotesize "abc 123"} \\
+
+      \texttt{call} &%
+      a genotype call &%
+      \texttt{\footnotesize call(0, 1)} \newline \texttt{\footnotesize call(2)} \\
+
+      \texttt{locus(ref)} &%
+      a genomic locus in the reference \texttt{\footnotesize ref} &%
+      \texttt{\footnotesize locus("1", 100000, "GRCh37")} \newline \texttt{\footnotesize locus("chrM", 1234, "GRCh38")} \\
+
+      \texttt{interval(T)} &%
+      an interval on the type \texttt{T} &%
+      \texttt{\footnotesize interval(4.5, 1e8)} \newline \texttt{\footnotesize interval("abc", "xyzdef")} \newline \texttt{\footnotesize interval(locus("1",1234), locus("1",5000))} \\
+
+      \texttt{ndarray(T)} &%
+      a vector, matrix, or tensor containing \texttt{\footnotesize T} &%
+      \texttt{\footnotesize nd.array([1, 2])} \newline \texttt{\footnotesize nd.array([[1.0, 0.0], [0.0, 1.0]])} \\
     \end{tabularx}
   \end{adjustbox}
   \caption{The Small Datatypes}
@@ -685,6 +722,119 @@ The MatrixTable on-disk format contains the same three files, two RVDs, index fo
 \end{figure}
 
 \subsection{Hail Batch}
+
+The Hail Batch interface may be thought of as a language for ``workflows'' or ``pipelines''.
+The two core concepts of Hail batch are ``jobs'' and ``batches''.
+Every job is a member of exactly one batch.
+A job has three essential poperties:
+\begin{enumerate}
+\item \texttt{image}: an identifier of an OCI container image.
+\item \texttt{command}: a Bash\footnote{The Bourne-Again Hell.} program.
+\item \texttt{parents}: the list of jobs on which this job depends.
+\end{enumerate}
+A job is ``executed'' by invoking Bash on the command inside an OCI container based on the image.
+The parents of a job must also be members of its batch.
+A batch must form a directed acyclic graph whose nodes are jobs and whose edges are defined by the parents of each job.
+The full list of job properties is shown in Figure \ref{fig:job-properties}.
+
+In our experience, there are three kinds of ``input'' parameters for a job:
+\begin{enumerate}
+\item A few bytes of configuration such as a seed for a random number generator.
+\end{enumerate}
+
+A job has many sources of input including the container image, the environment variables, and the command itself.
+These sources are fine for a few bytes of data but large inputs need a different mechanism.
+A job may access large input files in one of three ways.
+
+
+Jobs communicate with other jobs and the user by way of cloud storage.%
+\footnote{For example, Amazon S3, Google Cloud Storage, Azure Blob Storage.}
+
+
+A job has three mechanisms for communciation with cloud storage: localized files, FUSE mounts, and direct use of the cloud storage's HTTP API.
+A job has zero or more ``input'' files which are downloaded.
+
+
+\begin{figure}[h]
+  \begin{adjustbox}{minipage=19cm, center}
+   \rowcolors{2}{gray!20}{white}
+    \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}lXX}
+      \toprule
+      \tableheadline{Name} & \tableheadline{Description} & \tableheadline{Examples} \\
+      \midrule
+      \texttt{image} &
+      An identifier of an OCI container image. &
+      \texttt{\footnotesize ubuntu:20.04}, \texttt{\footnotesize us-docker.pkg.dev/org/tool} \\
+
+      \texttt{command} &
+      A Bash program. Typically an invocation of a binary. &
+      \texttt{\footnotesize grep /io/input -e "needle" > /io/output} \newline
+      \texttt{\footnotesize mv /io/input ./input \&\& /usr/bin/analyze}
+      \\
+
+      \texttt{parents} &
+      The list of jobs on which this job depends identified by their job identifier. &
+      \texttt{\footnotesize [1, 2, 10, 11, 13]} \\
+
+      \texttt{always\_run} &
+      If \texttt{True}, this job will execute even if a job on which it depends failed. &
+      \texttt{\footnotesize True} \newline \texttt{\footnotesize False} \\
+
+      \texttt{attributes} &
+      An arbitrary mapping of keys to values. Keys and values are both UTF-8 strings. &
+      \texttt{\footnotesize \{\}} \newline \texttt{\footnotesize \{"population": "AFR", "iteration": "5"\}} \\
+
+      \texttt{cpu} &
+      The number of cores allocated for this job. Must be a power of two between $1/4$ and $16$. &
+      \texttt{\footnotesize 0.25} \newline \texttt{\footnotesize 4} \\
+
+      \texttt{memory} &
+      The allocated core to allcoated memory ratio for this job. A fixed set of ratios are permitted. &
+      \texttt{\footnotesize "highmem"} \newline \texttt{\footnotesize "standard"} \\
+
+      \texttt{storage} &
+      The storage allocated for this job. &
+      \texttt{\footnotesize "5GiB"} \newline \texttt{\footnotesize "10GiB"} \\
+
+      \texttt{preemptible} &
+      If \texttt{True}, this job is executed on ``preemptible'' or ``spot'' cores. &
+      \texttt{\footnotesize True} \newline \texttt{\footnotesize False} \\
+
+      \texttt{timeout} &
+      The maximum time in seconds that a job may run. \texttt{None} indicates the job may run forever. &
+      \texttt{\footnotesize None} \newline \texttt{\footnotesize 300} \\
+
+      \texttt{cloudfuse} &
+      A list of cloud storage (e.g. S3, GCS) buckets exposed in the filesystem of the job. The Boolean indicates if the mount is read-only. &
+      \texttt{\footnotesize [("bucket1", "/bucket1", True)]} \\
+
+      \texttt{always\_copy\_output} &
+      Attempt to copy the output files into cloud storage even if the job fails. &
+      \texttt{\footnotesize True} \newline \texttt{\footnotesize True} \\
+
+      \texttt{env} &
+      The environment variables and associated values for the job. &
+      \texttt{\footnotesize \{"MKL\_NUM\_THREADS": "2"\}} \\
+
+      \texttt{regions} &
+      A set of permissible cloud regions in which to execute this job. \texttt{None} indicates all regions are permissible. &
+      \texttt{\footnotesize None} \newline \texttt{\footnotesize \{"us-central", "us-east"\}} \\
+
+      \texttt{inputs} &
+      A list of symbolic files which are exposed in the filesystem of the job. &
+      \\
+
+      \texttt{ouputs} &
+      A list of symbolic files which may appear in the inputs of jobs that depend on this job. &
+      \texttt{\footnotesize None} \newline \texttt{\footnotesize \{"us-central", "us-east"\}} \\
+
+    \end{tabularx}
+  \end{adjustbox}
+  \caption{The properties of a job.}
+  \label{fig:job-properties}
+\end{figure}
+
+
 
 \section{Future Work}
 \subsection{Tensor Table}
